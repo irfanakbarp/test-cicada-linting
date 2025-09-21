@@ -1,0 +1,52 @@
+linters:
+  default: all
+  # Enable specific linter.
+  enable:
+    - errcheck
+    - gosimple
+    - asasalint
+    - bodyclose
+    - decorder
+    - dupl
+    - fatcontext
+    - godot
+    - goimports
+    - rowserrcheck
+    - sqlclosecheck
+    - unparam
+    - wastedassign
+    - whitespace
+    - perfsprint
+    - noctx
+    - zerologlint
+  # Disable specific linters.
+  disable:
+    - staticcheck
+  # All available settings of specific linters.
+  settings:
+    # See the dedicated "linters.settings" documentation section.
+    option: value
+formatters:
+  # Enable specific formatter.
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+    - golines
+    - swaggo
+  settings:
+    option: value
+  exclusions:
+    warn-unused: true
+    generated: strict
+    paths:
+      - ".*\\.my\\.go$"
+      - lib/bad.go
+issues:
+  max-issues-per-linter: 100
+  max-same-issues: 5
+  uniq-by-line: false
+  new: false
+  whole-files: true
+  fix: true
