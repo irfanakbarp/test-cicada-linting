@@ -1,4 +1,4 @@
-name: Go Lint & Format
+name: Go Lint
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   lint:
-    name: Run Linters
+    name: Run linters
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
@@ -33,29 +33,7 @@ jobs:
           version: latest
           args: --config .golangci.yml --timeout 5m
 
-      - name: Run format check
+      - name: Run go linter
         run: |
-          go install github.com/daixiang0/gci@latest
-          go install mvdan.cc/gofumpt@latest
-          go install golang.org/x/tools/cmd/goimports@latest
-          go install github.com/segmentio/golines@latest
-          go install github.com/swaggo/swag/cmd/swag@latest
-
-          echo "==> Running gci"
-          gci write . --skip-generated -s standard -s default -s "prefix(your/module/path)"
-
-          echo "==> Running gofumpt"
-          gofumpt -w .
-
-          echo "==> Running goimports"
-          goimports -w .
-
-          echo "==> Running golines"
-          golines -w .
-
-          echo "==> Running swag"
-          swag fmt
-
-      - name: Verify formatting
-        run: |
-          git diff --exit-code || (echo "Formatting issues found. Please run 'golangci-lint run' locally." && exit 1)
+          golangci-lint run --config .golangci.yml --timeout 5m || \
+          (echo "Golang linter found issues! Please fix them before merging." && exit 1)
