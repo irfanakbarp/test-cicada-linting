@@ -14,7 +14,7 @@ go mod tidy
 // Run app without hot reload
 go run . 
 
-// Run app with hot reload
+// Run app with hot reload linting
 air
 
 // Go Artisan, use go artisan to create models, requests, middlewares, etc.
